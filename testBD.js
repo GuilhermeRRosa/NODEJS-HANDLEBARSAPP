@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('teste', 'root', 'root', {
-    host: "172.17.0.2",
+const sequelize = new Sequelize('db_study', 'root', 'root', {
+    host: "localhost",
+    port: "61931",
     dialect: 'mysql'
 })
 
@@ -12,22 +13,32 @@ sequelize.authenticate().then(function(){
 })
 
 //Test ORM
-const MyTable = sequelize.define('tabelaDeDados', {
-    titulo: {
-        type: Sequelize.STRING
-    },
-    conteudo: {
-        type: Sequelize.TEXT
+async function defineTabelaDeDados(){
+    const MyTable = sequelize.define('tabelaDeDados', {
+        titulo: {
+            type: Sequelize.STRING
+        },
+        conteudo: {
+            type: Sequelize.TEXT
+        }
+    })
+
+    try {
+        await MyTable.sync()
+    } catch (error) {
+        console.log("ERRO AI KRAI")
     }
+    return MyTable
+}
+
+defineTabelaDeDados().then(function(table){
+    console.log("tabela sincronizada")
+
+    table.create({
+        titulo: "Teste de titulo",
+        conteudo: "ASDASDasdasdasdasdas asdasdasdasdasdasdasdqwdqwwqdaz asdwqwdqwdasdasdasdasd"
+    })
 })
 
-MyTable.create({
-    titulo: "Teste de titulo",
-    conteudo: "ASDASDasdasdasdasdas asdasdasdasdasdasdasdqwdqwwqdaz asdwqwdqwdasdasdasdasd"
-})
 
-// MyTable.sync({force: true}).then(() => {
-//     console.log("Banco atualizado com sucesso")
-// }).catch((erro)=> {
-//     console.log("Erro ao atualizar banco: "+erro)
-// })
+

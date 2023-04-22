@@ -22,7 +22,11 @@ app.set('views', 'views')
 app.get('/', function(req, res){
     res.render('home', {
         title: "NodeApp handlebars",
-        engine: "handlebars"
+        engine: "handlebars",
+        githubLink: 'https://github.com/GuilhermeRRosa',
+        aboutHbs: 'https://www.npmjs.com/package/express-handlebars',
+        aboutNode: 'https://nodejs.org/en',
+        sourceCode: 'https://github.com/GuilhermeRRosa/NODEJS-HANDLEBARSAPP'
     })
 })
 
